@@ -33,6 +33,6 @@ Watcher()
 
 task_handle_thread = threading.Thread(target=task_handle.server_for_task)
 task_handle_thread.start()
-scan_result_thread = threading.Thread(target=scan_result.scan_result)
-scan_result_thread.start()
+# scan_result_thread = threading.Thread(target=scan_result.scan_result)
+# scan_result_thread.start()
 # task_handle_thread.join()
