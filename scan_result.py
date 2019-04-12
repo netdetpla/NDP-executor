@@ -40,11 +40,12 @@ def send_result(container_name):
 				print("result: " + str(result))
 				producer = Kafka_producer(settings.kafka_ip, settings.kafka_port, settings.result_topic_name)
 				producer.sendjsondata(json.dumps(result))
-				docker_interface.delete_container(container_name)
 			except Exception as e:
 				print('in send_result: ' + str(e))
 			finally:
 				f.close()
+	print("delete the container...")
+	docker_interface.delete_container(container_name)
 	print('send result complete.')
 	db_manager.update_task_status(20030, task_id)
 	return
