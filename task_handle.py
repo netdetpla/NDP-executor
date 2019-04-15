@@ -5,7 +5,7 @@ import os
 import threading
 import datetime
 import docker_interface
-import scan_result
+import settings
 
 with open("config.json", 'r') as f:
     config = json.load(f)
@@ -63,7 +63,7 @@ def parse_task(task_config, scheduling_ip):
         reply['desc'] = 'success'
 
         mid_name = "task" + str(task_config['id'])  # + '_' + datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
-        dirs = '/tmp/' + mid_name
+        dirs = settings.watch_dir + os.sep + mid_name
         os.makedirs(dirs + '/conf')
         with open(dirs + '/conf/busi.conf', 'w') as f:
             content = task_config['param']
@@ -81,7 +81,7 @@ def parse_task(task_config, scheduling_ip):
         if id:
             print("checking...")
             check_container_status_thread = threading.Thread(target=docker_interface.check_container_status,
-                                                             args=(mid_name, task_config['id']))
+                                                             args=(mid_name, task_config['id'], task_config['image_name']))
             check_container_status_thread.setName(mid_name)
             check_container_status_thread.start()
         else:

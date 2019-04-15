@@ -7,7 +7,7 @@ from pykafka import KafkaClient
 
 def send_task_test():
     data = {
-        "id": "7",
+        "id": "10",
         "task_tag": "task",
         "image_name": "scanweb",
         "tag": "1.1.9",
@@ -29,7 +29,7 @@ def accept_result(port, kafkaHost, kafkatopic):
 
     print client.topics
 
-    topic = client.topics[bytes(kafkatopic)]
+    topic = client.topics[kafkatopic]
     consumer = topic.get_simple_consumer(consumer_group='taskResultLink', auto_commit_enable=True,
                                          auto_commit_interval_ms=1,
                                          consumer_id='taskResultLink')
