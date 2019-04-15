@@ -48,7 +48,7 @@ def taskResultLink(port, db, machineManager, taskManager, kafkaHost, kafkatopic)
 
 if __name__ == '__main__':
     send_task_test()
-    accept_result(9092, '127.0.0.1:9092', 'resultnew')
+    accept_result(9092, '127.0.0.1:9092', 'scanWebTaskFile')
     # accept_result()
 
 # def taskResultLink(port,db,machineManager,taskManager,kafkaHost,kafkatopic):#通过kafka接收镜像任务执行的结果文件中的记录

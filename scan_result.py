@@ -38,7 +38,7 @@ def send_result(container_name):
 				result = f.read()
 				result = {'task_id': task_id, 'md5': '', 'resultline': result}
 				print("result: " + str(result))
-				producer = Kafka_producer(settings.kafka_ip, settings.kafka_port, settings.result_topic_name)
+				producer = Kafka_producer(settings.kafka_ip, settings.kafka_port, settings.result_topics)
 				producer.sendjsondata(json.dumps(result))
 			except Exception as e:
 				print('in send_result: ' + str(e))
