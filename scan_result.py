@@ -61,14 +61,15 @@ def send_result(container_name, image_name):
 
 
 def delete_dir(path):
-    for dir in os.listdir(path):
-        path_file = os.path.join(path, dir)
-        if os.path.isfile(path_file):
-            os.system('chmod 777 ' + path_file)
-            os.remove(path_file)
-        else:
-            delete_dir(path_file)
-    os.removedirs(path)
+    if os.path.exists(path):
+        for dir in os.listdir(path):
+            path_file = os.path.join(path, dir)
+            if os.path.isfile(path_file):
+                os.system('chmod 777 ' + path_file)
+                os.remove(path_file)
+            elif os.path.isdir(path_file):
+                shutil.rmtree(path_file, True)
+        shutil.rmtree(path, True) 
 
 
 if __name__ == '__main__':
