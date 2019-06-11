@@ -26,7 +26,8 @@ def server_for_task():
     while True:
         client_sock, client_addr = sockfd.accept()
         if client_addr[0] not in scheduling_ips:
-            client_sock.close()
+            pass
+            #client_sock.close()
         else:
             recv_json = ""
             while True:
