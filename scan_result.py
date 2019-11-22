@@ -26,10 +26,12 @@ def send_result(container_name, image_name):
     print("topic: " + topic)
     task_id = container_name[4:]
     print('sending result...')
+    dirpath = settings.watch_dir + os.sep + container_name
 
     if not os.path.exists(settings.watch_dir + os.sep + container_name + os.sep + 'result'):
         print('no result dir')
         db_manager.update_task_status(-1, container_name)
+        delete_dir(dirpath)
         return
 
     resultList = os.listdir(settings.watch_dir + os.sep + str(container_name) + os.sep + 'result')
@@ -53,7 +55,6 @@ def send_result(container_name, image_name):
     print('send result complete.')
     docker_interface.delete_container(container_name)
     # delete the dir
-    dirpath = settings.watch_dir + os.sep + container_name
     delete_dir(dirpath)
 
     db_manager.update_task_status(20030, task_id)

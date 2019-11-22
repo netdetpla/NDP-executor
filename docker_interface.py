@@ -58,6 +58,7 @@ def check_container_status(container_name, task_id, image_name):
             result['restarting'] = status['Restarting']
             result['error'] = status['Error']
             result['exitcode'] = status['ExitCode']
+            dirpath = settings.watch_dir + os.sep + container_name
 
             if result['status'] == 'running':
                 db_manager.update_task_status(20020, task_id)
@@ -72,10 +73,12 @@ def check_container_status(container_name, task_id, image_name):
                 else:
                     db_manager.update_task_status(result['exitcode'], task_id)
                     print(str(container_name) + ': container_status is ' + str(result))
+                    scan_result.delete_dir(dirpath)
                     break
             else:
                 db_manager.update_task_status(result['exitcode'], task_id)
                 print(str(container_name) + ': container_status is ' + str(result))
+                scan_result.delete_dir(dirpath)
                 break
         else:
             # container不存在
