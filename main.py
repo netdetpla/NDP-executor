@@ -34,8 +34,8 @@ def rm_exited_container():
     while True:
         # 每过一段时间清理已存在的container
         time.sleep(10)
-        print("rm exited container")
-        os.system("docker rm $(docker ps -q -f status=exited)")
+        #print("rm exited container")
+        os.system("docker rm $(docker ps -a -q -f exited=2) >/dev/null 2>&1")
 
 
 Watcher()
@@ -44,7 +44,7 @@ task_handle_thread = threading.Thread(target=task_handle.server_for_task)
 task_handle_thread.start()
 
 rm_exited_container_thread = threading.Thread(target=rm_exited_container)
-rm_exited_container_thread.start()
-# scan_result_thread = threading.Thread(target=scan_result.scan_result)
-# scan_result_thread.start()
-# task_handle_thread.join()
+#rm_exited_container_thread.start()
+#scan_result_thread = threading.Thread(target=scan_result.scan_result)
+#scan_result_thread.start()
+#task_handle_thread.join()
