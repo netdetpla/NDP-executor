@@ -69,8 +69,14 @@ def get_all_finished_tasks():
 def change_executor_status():
 	db = get_db(settings.db)
 	cursor = db.cursor()
-	sql = 'update executor set `status` = 0 where exec_ip = %s'
-	cursor.execute(sql, (docker_interface.config['self']['ip']))
+	sql = 'update executor set status = 0 where exec_ip = %s'
+	try:
+		cursor.execute(sql, (docker_interface.config['self']['ip']))
+		db.commit()
+	except Exception as e:
+		print(e)
+	finally:
+		db.close()
 
 
 if __name__ == '__main__':
