@@ -1,5 +1,6 @@
 import pymysql
 import settings
+import docker_interface
 
 
 def get_db(config):
@@ -63,6 +64,13 @@ def get_all_finished_tasks():
 		tasks.append(task[0])
 	print('all_finished_tasks: ' + str(tasks))
 	return tasks
+
+
+def change_executor_status():
+	db = get_db(settings.db)
+	cursor = db.cursor()
+	sql = 'update executor set status = 0 where exec_ip = %s'
+	cursor.execute(sql, (docker_interface.config['self']['ip']))
 
 
 if __name__ == '__main__':

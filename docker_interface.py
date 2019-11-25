@@ -69,16 +69,19 @@ def check_container_status(container_name, task_id, image_name):
                     db_manager.update_task_status(20030, task_id)
                     print(str(container_name) + ': container_status is ' + str(result))
                     scan_result.send_result(container_name, image_name)
+                    db_manager.change_executor_status()
                     break
                 else:
                     db_manager.update_task_status(result['exitcode'], task_id)
                     print(str(container_name) + ': container_status is ' + str(result))
                     scan_result.delete_dir(dirpath)
+                    db_manager.change_executor_status()
                     break
             else:
                 db_manager.update_task_status(result['exitcode'], task_id)
                 print(str(container_name) + ': container_status is ' + str(result))
                 scan_result.delete_dir(dirpath)
+                db_manager.change_executor_status()
                 break
         else:
             # container不存在
